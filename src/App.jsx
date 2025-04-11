@@ -6,14 +6,21 @@ import About from './pages/About';
 
 function App() {
   return (
-    <div className="min-h-screen bg-primary text-white">
+    <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/stories" element={<AllStories />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-    </div>
+      <main className="flex-grow container mx-auto px-4 py-6">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/stories" element={<AllStories />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </main>
+      <footer className="bg-primary text-white p-4 text-center">
+        <div className="container mx-auto">
+          <p>© {new Date().getFullYear()} News Drop Isle of Wight</p>
+        </div>
+      </footer>
+    </>
   );
 }
 
