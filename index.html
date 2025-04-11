@@ -1,33 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>The News Drop – Isle of Wight</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-      padding: 2rem;
-      text-align: center;
-    }
-    h1 {
-      color: #333;
-    }
-    footer {
-      margin-top: 2rem;
-      font-size: 0.9rem;
-      color: #666;
-    }
-  </style>
-</head>
-<body>
-  <h1>Welcome to The News Drop – Isle of Wight</h1>
-  <p>Local news powered by automation.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News Drop</title>
 
-  <footer>
-    &copy; 2025 The News Drop
-  </footer>
-</body>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Optional: Custom Tailwind theme -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#012a87',
+              accent: '#1ABC9C',
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
