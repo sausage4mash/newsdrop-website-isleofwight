@@ -3,5 +3,5 @@ npm run build
 npm run deploy
 
 git add .
-git commit -m "Deleted vite.config.js and cleaned up project"
+git commit -m "clean up"
 git push origin master  # or `main`, depending on your branch
