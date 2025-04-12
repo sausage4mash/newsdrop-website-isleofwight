@@ -4,4 +4,4 @@ npm run deploy
 
 git add .
 git commit -m "clean up"
-git push origin master  # or `main`, depending on your branch
+git push origin master  
