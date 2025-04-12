@@ -1,0 +1,124 @@
+/* Custom styles for News Drop Isle of Wight website */
+
+/* Smooth scrolling for the entire page */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Article card hover effect */
+.article-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Tag pill styles */
+.tag-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Tag colors */
+.tag-politics {
+    background-color: #2563eb;
+    color: white;
+}
+
+.tag-travel {
+    background-color: #059669;
+    color: white;
+}
+
+.tag-crime {
+    background-color: #dc2626;
+    color: white;
+}
+
+.tag-health {
+    background-color: #7c3aed;
+    color: white;
+}
+
+.tag-environment {
+    background-color: #10b981;
+    color: white;
+}
+
+.tag-business {
+    background-color: #f59e0b;
+    color: white;
+}
+
+/* Success and error message styles */
+.success-message {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    border-left: 4px solid #10b981;
+}
+
+.error-message {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    border-left: 4px solid #ef4444;
+}
+
+/* Fade-in animation for article loading */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Mobile navigation slide animation */
+#mobile-menu {
+    transition: max-height 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+}
+
+#mobile-menu.open {
+    max-height: 500px;
+}
+
+/* Active link styles */
+.active-link {
+    color: #bfdbfe; /* blue-200 */
+    font-weight: 600;
+}
+
+/* Custom placeholder loading animation */
+.loading-placeholder {
+    background: linear-gradient(90deg, #f3f4f6 0%, #e5e7eb 50%, #f3f4f6 100%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
