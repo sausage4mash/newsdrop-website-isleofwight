@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Island Council goes on a trip - News Drop Isle of Wight</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../CSS/styles.css">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Genos:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+  <header class="bg-white shadow-md">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="../index.html" class="flex items-center space-x-3">
+        <img src="../images/logo.png" alt="News Drop Isle of Wight Logo" class="h-24">
+        <div class="hidden sm:flex flex-col leading-tight">
+          <span class="text-4xl font-bold text-red-800">News Drop</span>
+          <span class="text-sm font-semibold text-red-800">news at the speed of wight</span>
+        </div>
+      </a>
+      <button id="mobile-menu-button" class="block md:hidden text-gray-700 hover:text-red-800 focus:outline-none">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <nav id="main-nav" class="bg-red-800 text-white hidden md:block">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row md:justify-between md:items-center py-3">
+        <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6">
+          <li><a href="../index.html" class="hover:text-red-200 font-medium">Home</a></li>
+          <li><a href="#" class="hover:text-red-200">News</a></li>
+          <li><a href="#" class="hover:text-red-200">Weather</a></li>
+          <li><a href="#" class="hover:text-red-200">Traffic</a></li>
+          <li><a href="#" class="hover:text-red-200">About</a></li>
+          <li><a href="#" class="hover:text-red-200">Contact</a></li>
+        </ul>
+        <div class="mt-4 md:mt-0 flex flex-col md:flex-row md:items-center md:space-x-4">
+          <div class="relative">
+            <input type="text" id="search-input" placeholder="Search articles..." class="w-full md:w-64 px-4 py-2 text-gray-700 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+            <button id="search-button" class="absolute right-2 top-2 text-gray-600">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" class="hidden bg-red-800 text-white md:hidden">
+    <div class="container mx-auto px-4 py-3">
+      <ul class="space-y-2">
+        <li><a href="../index.html" class="block hover:bg-red-700 px-2 py-1 rounded">Home</a></li>
+        <li><a href="#" class="block hover:bg-red-700 px-2 py-1 rounded">News</a></li>
+        <li><a href="#" class="block hover:bg-red-700 px-2 py-1 rounded">Weather</a></li>
+        <li><a href="#" class="block hover:bg-red-700 px-2 py-1 rounded">Traffic</a></li>
+        <li><a href="#" class="block hover:bg-red-700 px-2 py-1 rounded">About</a></li>
+        <li><a href="#" class="block hover:bg-red-700 px-2 py-1 rounded">Contact</a></li>
+      </ul>
+      <div class="mt-4">
+        <input type="text" placeholder="Search articles..." class="w-full px-4 py-2 text-gray-700 bg-white rounded-lg focus:outline-none">
+      </div>
+    </div>
+  </div>
+
+  <main class="flex-grow container mx-auto px-4 py-6">
+    <div class="flex flex-col lg:flex-row">
+      <div class="w-full lg:w-3/4 lg:pr-6">
+        <div id="article-container" class="bg-white rounded-lg shadow-md p-6 mb-6">
+          <!-- ARTICLE CONTENT STARTS -->
+          <div class="mb-4">
+            <span class="tag-pill tag-travel">travel</span>
+            <span class="text-sm text-gray-500 ml-2">Saturday, April 12, 2025</span>
+          </div>
+          <h1 class="text-3xl font-bold text-gray-800 mb-6">Island Council goes on a trip</h1>
+          <div class="mb-6">
+            <img src="../images/articles/housing-plan.jpg" alt="Island Council trip" class="w-full h-64 object-cover rounded">
+            <p class="text-sm text-gray-500 mt-2">Image caption: Council members during their trip</p>
+          </div>
+          <div class="prose max-w-none">
+            <p>The Isle of Wight Council has approved a major housing plan that will see the development of 500 new affordable homes across the island over the next five years.</p>
+            
+            <p>The initiative, which was passed with cross-party support during yesterday's council meeting, aims to address the growing housing crisis on the island where property prices have risen by over 25% in the last three years.</p>
+            
+            <p>Council leader James Harrington described the plan as "the most significant housing investment in a generation" and emphasized its importance for retaining young families on the island.</p>
+            
+            <p>"We cannot continue to watch our young people leave because they simply cannot afford to live here," Harrington stated. "This plan puts affordable housing at the heart of our strategy for a sustainable island community."</p>
+            
+            <h2 class="text-2xl font-bold mt-6 mb-4">Environmental Considerations</h2>
+            
+            <p>The housing plan includes strict environmental guidelines, with all new developments required to meet high energy efficiency standards and incorporate renewable energy solutions where possible.</p>
+            
+            <p>Local environmental groups have cautiously welcomed the initiative, though some concerns remain about the impact on green spaces. The council has promised that 40% of the developments will be built on previously developed "brownfield" sites.</p>
+            
+            <p>Sarah Matthews from the Isle of Wight Environmental Trust said: "We recognize the urgent need for housing, but this must be balanced with environmental protection. We'll be monitoring these developments closely to ensure that promises made are kept."</p>
+            
+            <h2 class="text-2xl font-bold mt-6 mb-4">Community Reaction</h2>
+            
+            <p>The plan has received mixed reactions from island residents. Many have welcomed the focus on affordable housing, while others have expressed concerns about increased pressure on local infrastructure.</p>
+            
+            <p>The council has confirmed that each development will be subject to a full infrastructure assessment, with improvements to roads, schools, and healthcare facilities included where necessary.</p>
+            
+            <p>Construction on the first sites is expected to begin in September 2025, with the first homes ready for occupation by summer 2026.</p>
+          </div>
+          <div class="flex items-center mt-8 pt-6 border-t border-gray-200">
+            <div class="mr-4">
+              <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
+                <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+            </div>
+            <div>
+              <p class="font-medium">By News Drop Reporter</p>
+              <p class="text-sm text-gray-500">Local Journalist</p>
+            </div>
+          </div>
+          <!-- ARTICLE CONTENT ENDS -->
+        </div>
+
+        <div id="related-articles" class="mb-6">
+          <h3 class="text-xl font-bold mb-4">More Stories</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white rounded-lg shadow p-4">
+              <div class="mb-2">
+                <span class="tag-pill tag-politics">politics</span>
+              </div>
+              <h4 class="font-semibold mb-2">Island Council Approves New Housing Plan</h4>
+              <a href="1030-2025-04-12-politics.html" class="text-blue-600 hover:underline">Read more →</a>
+            </div>
+            <div class="bg-white rounded-lg shadow p-4">
+              <div class="mb-2">
+                <span class="tag-pill tag-environment">environment</span>
+              </div>
+              <h4 class="font-semibold mb-2">Island Council the planet is hot</h4>
+              <a href="1620-2025-04-11-environment.html" class="text-blue-600 hover:underline">Read more →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h3 class="text-xl font-bold mb-4">Leave a Comment</h3>
+          <form id="comment-form" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="

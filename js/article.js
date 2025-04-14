@@ -1,4 +1,4 @@
-// News Drop Isle of Wight - Article Page JavaScript (JSON-based)
+// News Drop Isle of Wight - Article Page JavaScript (HTML-based)
 
 document.addEventListener('DOMContentLoaded', function () {
     setupMobileMenu();
@@ -31,48 +31,75 @@ function loadArticle(articleId) {
 
     document.title = `Loading Article... - News Drop Isle of Wight`;
 
-    fetch(`stories/${articleId}.json`)
+    // Now loading HTML file instead of JSON
+    fetch(`stories/${articleId}.html`)
         .then(response => {
             if (!response.ok) throw new Error('Article not found');
-            return response.json();
+            return response.text(); // Get HTML content as text
         })
-        .then(article => {
-            document.title = `${article.title} - News Drop Isle of Wight`;
-
-            articleContainer.innerHTML = `
-                <div class="mb-4">
-                    <span class="tag-pill tag-${article.tag}">${article.tag}</span>
-                    <span class="text-sm text-gray-500 ml-2">${formatDate(article.date)}</span>
-                </div>
-                <h1 class="text-3xl font-bold text-gray-800 mb-6">${article.title}</h1>
-                ${article.image ? `
-                    <div class="mb-6">
-                        <img src="${article.image}" alt="${article.title}" class="w-full h-64 object-cover rounded">
-                        <p class="text-sm text-gray-500 mt-2">Image caption: View of ${article.tag}</p>
-                    </div>` : ''}
-                <div class="prose max-w-none">
-                    ${article.content}
-                </div>
-                <div class="flex items-center mt-8 pt-6 border-t border-gray-200">
-                    <div class="mr-4">
-                        <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
-                            <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="font-medium">By News Drop Reporter</p>
-                        <p class="text-sm text-gray-500">Local Journalist</p>
-                    </div>
-                </div>
-            `;
-
-            relatedArticlesContainer.innerHTML = '<p class="text-sm text-gray-500">More local stories coming soon.</p>';
+        .then(htmlContent => {
+            // Insert the HTML content directly into the container
+            articleContainer.innerHTML = htmlContent;
+            
+            // Extract title from HTML for page title
+            const titleMatch = htmlContent.match(/<h1[^>]*>(.*?)<\/h1>/i);
+            const title = titleMatch ? titleMatch[1] : 'Article';
+            document.title = `${title} - News Drop Isle of Wight`;
+            
+            // You could also load related articles here if needed
+            loadRelatedArticles(articleId);
         })
         .catch(error => {
             console.error(error);
             displayError('Article not found. Please try again or return to the homepage.');
+        });
+}
+
+function loadRelatedArticles(currentArticleId) {
+    const relatedArticlesContainer = document.getElementById('related-articles');
+    
+    // Load index to find other articles
+    fetch('stories/index.json')
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to load related articles');
+            return response.json();
+        })
+        .then(fileList => {
+            // Filter out current article and get up to 3 related articles
+            const otherArticles = fileList
+                .filter(filename => !filename.includes(currentArticleId))
+                .slice(0, 3);
+                
+            if (otherArticles.length > 0) {
+                relatedArticlesContainer.innerHTML = '<h3 class="text-xl font-bold mb-4">Related Stories</h3><div class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>';
+                const relatedGrid = relatedArticlesContainer.querySelector('.grid');
+                
+                otherArticles.forEach(filename => {
+                    // Extract basic info from filename
+                    const parts = filename.replace('.json', '').split('-');
+                    const id = filename.replace('.json', '');
+                    const date = `${parts[2]}-${parts[1]}-${parts[0].slice(0, 4)}`;
+                    const tag = parts[3];
+                    
+                    // Create a placeholder card
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-lg shadow p-4';
+                    card.innerHTML = `
+                        <div class="mb-2">
+                            <span class="tag-pill tag-${tag}">${tag}</span>
+                        </div>
+                        <h4 class="font-semibold mb-2">Related Story</h4>
+                        <a href="${id}.html" class="text-blue-600 hover:underline">Read more →</a>
+                    `;
+                    relatedGrid.appendChild(card);
+                });
+            } else {
+                relatedArticlesContainer.innerHTML = '<p class="text-sm text-gray-500">More local stories coming soon.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error loading related articles:', error);
+            relatedArticlesContainer.innerHTML = '<p class="text-sm text-gray-500">More local stories coming soon.</p>';
         });
 }
 
@@ -86,7 +113,7 @@ function displayError(message) {
             </svg>
             <h2 class="mt-4 text-xl font-bold text-gray-800">${message}</h2>
             <div class="mt-6">
-                <a href="index.html" class="inline-block bg-blue-800 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition duration-300">
+                <a href="index.html" class="inline-block bg-red-800 hover:bg-red-700 text-white font-medium py-2 px-6 rounded-lg transition duration-300">
                     Return to Homepage
                 </a>
             </div>
@@ -95,12 +122,6 @@ function displayError(message) {
 
     document.querySelector('.mt-8').classList.add('hidden');
     document.title = `Article Not Found - News Drop Isle of Wight`;
-}
-
-function formatDate(dateString) {
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB', options);
 }
 
 function setupSubscribeForm() {
