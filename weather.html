@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App - Isle of Wight</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-blue-500 to-indigo-600 min-h-screen flex items-center justify-center font-sans mt-10">
+  <div class="bg-white bg-opacity-90 shadow-2xl rounded-2xl p-8 max-w-sm w-full">
+    <h1 class="text-2xl font-bold text-center mb-4">Isle of Wight Weather</h1>
+
+    <div id="weatherResult" class="mt-2 hidden">
+      <div class="flex items-center justify-center space-x-4 mb-2">
+        <span id="todayIcon" class="text-4xl"></span>
+        <h2 class="text-xl font-semibold text-center">Isle of Wight</h2>
+      </div>
+      <p class="text-center text-gray-700" id="temperature"></p>
+      <p class="text-center text-gray-600 italic" id="description"></p>
+      <p class="text-center text-sm text-gray-500" id="todayForecast"></p>
+    </div>
+
+    <div id="forecastResult" class="mt-6 hidden">
+      <h3 class="text-lg font-semibold text-center mb-2">7-Day Forecast</h3>
+      <ul id="forecastList" class="space-y-2"></ul>
+    </div>
+  </div>
+
+  <script>
+    const weatherIcons = {
+      0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
+      45: '🌫️', 48: '🌫️', 51: '🌦️', 53: '🌦️', 55: '🌧️',
+      61: '🌦️', 63: '🌧️', 65: '🌧️', 71: '🌨️', 73: '🌨️', 75: '❄️',
+      80: '🌧️', 81: '🌧️', 82: '⛈️', 95: '⛈️', 96: '⛈️', 99: '⛈️'
+    };
+
+    const weatherDescriptions = {
+      0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+      45: 'Fog', 48: 'Depositing rime fog', 51: 'Light drizzle', 53: 'Moderate drizzle', 55: 'Dense drizzle',
+      61: 'Slight rain', 63: 'Moderate rain', 65: 'Heavy rain',
+      71: 'Slight snow fall', 73: 'Moderate snow fall', 75: 'Heavy snow fall',
+      80: 'Slight rain showers', 81: 'Moderate rain showers', 82: 'Violent rain showers',
+      95: 'Thunderstorm', 96: 'Thunderstorm with hail', 99: 'Severe thunderstorm'
+    };
+
+    function getDayName(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('en-UK', { weekday: 'short' });
+    }
+
+    async function getWeather() {
+      const latitude = 50.6989;
+      const longitude = -1.2914;
+      const currentUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
+      const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FLondon`;
+
+      try {
+        const [currentRes, forecastRes] = await Promise.all([
+          fetch(currentUrl),
+          fetch(forecastUrl)
+        ]);
+
+        if (!currentRes.ok || !forecastRes.ok) throw new Error('Weather data not found');
+
+        const currentData = await currentRes.json();
+        const forecastData = await forecastRes.json();
+
+        const weather = currentData.current_weather;
+        const todayCode = forecastData.daily.weathercode[0];
+        const todayDesc = weatherDescriptions[todayCode] || 'Unknown weather';
+
+        document.getElementById('temperature').innerText = `${weather.temperature}°C`;
+        document.getElementById('description').innerText = `Windspeed: ${weather.windspeed} km/h`;
+        document.getElementById('todayIcon').innerText = weatherIcons[todayCode] || '❓';
+        document.getElementById('todayForecast').innerText = `Today's forecast: ${todayDesc}`;
+        document.getElementById('weatherResult').classList.remove('hidden');
+
+        const forecastList = document.getElementById('forecastList');
+        forecastList.innerHTML = '';
+        const days = forecastData.daily.time;
+        const codes = forecastData.daily.weathercode;
+
+        for (let i = 0; i < days.length; i++) {
+          const day = getDayName(days[i]);
+          const max = forecastData.daily.temperature_2m_max[i];
+          const min = forecastData.daily.temperature_2m_min[i];
+          const code = codes[i];
+
+          const item = document.createElement('li');
+          item.className = 'bg-white shadow rounded-lg p-3 flex items-center justify-between';
+
+          item.innerHTML = `
+            <div class="flex items-center space-x-4">
+              <span class="text-sm font-semibold text-gray-700 w-10">${day}</span>
+              <span class="text-2xl leading-none">${weatherIcons[code] || '❓'}</span>
+            </div>
+            <span class="text-sm text-gray-600">${min}°C / ${max}°C</span>
+          `;
+
+          forecastList.appendChild(item);
+        }
+
+        document.getElementById('forecastResult').classList.remove('hidden');
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', getWeather);
+  </script>
+</body>
+</html>
