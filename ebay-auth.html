@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head><title>eBay Auth Redirect</title></head>
+  <body>
+    <h2>eBay Authorization</h2>
+    <p id="output">Waiting for code...</p>
+    <script>
+      const code = new URLSearchParams(window.location.search).get("code");
+      if (code) {
+        document.getElementById("output").innerHTML = `<strong>✅ CODE:</strong> ${code}`;
+        console.log("eBay auth code:", code);
+      } else {
+        document.getElementById("output").innerHTML = "❌ No code found in redirect.";
+      }
+    </script>
+  </body>
+</html>
