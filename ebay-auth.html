@@ -1,17 +1,19 @@
-<!DOCTYPE html>
-<html>
-  <head><title>eBay Auth Redirect</title></head>
-  <body>
-    <h2>eBay Authorization</h2>
-    <p id="output">Waiting for code...</p>
-    <script>
-      const code = new URLSearchParams(window.location.search).get("code");
-      if (code) {
-        document.getElementById("output").innerHTML = `<strong>✅ CODE:</strong> ${code}`;
-        console.log("eBay auth code:", code);
-      } else {
-        document.getElementById("output").innerHTML = "❌ No code found in redirect.";
-      }
-    </script>
-  </body>
-</html>
+<p id="output">Waiting for code...</p>
+<button id="copy" hidden>Copy full code</button>
+
+<script>
+  const code = new URLSearchParams(window.location.search).get("code");
+
+  if (code) {
+    document.getElementById("output").textContent =
+      `Authorization code received (${code.length} characters).`;
+    const button = document.getElementById("copy");
+    button.hidden = false;
+    button.onclick = async () => {
+      await navigator.clipboard.writeText(code);
+      button.textContent = "Copied";
+    };
+  } else {
+    document.getElementById("output").textContent = "No code found in redirect.";
+  }
+</script>
